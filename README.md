@@ -58,6 +58,32 @@ var func = async () => await client.ModifyProfilePostAsync (id, msg);
 var result = await client.SafeRequestAsync(func);
 ```
 
+# Eventful Quickstart
+We've begun work on an event-driven listener for the API.
+
+To get started, create your standard API client as usual, then initialise an `ApiListener`:
+```cs
+ApiListener listener = new(client);
+```
+
+You'll need to add some `ISubscriptionProvider`s to your listener. Each listener contains events for when data is fetched and succeeds, fails and when data has changed. You can, for example, add a `HealthProvider`:
+```cs
+HealthProvider healthProvider = new ();
+healthProvider.DataChanged += async (o, e) => {
+	// logic here, e.Content for updated.
+};
+healthProvider.FetchSuccess += async (o, e) => {
+	// logic here, e.Content for data.
+};
+```
+
+You can then add it:
+```cs
+listener.AddSubscriptionProvider(healthProvider);
+```
+
+And you're done!
+
 # Documentation
 This project has a Doxyfile availale for you to build documentation.
 
