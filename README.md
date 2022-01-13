@@ -82,7 +82,9 @@ You can then add it:
 listener.AddSubscriptionProvider(healthProvider);
 ```
 
-And you're done!
+And you're done! You can adjust delays for both your providers and listener. Keep in mind that providers should always make safe requests, so you'll never hit ratelimit issues unless you toggle the dangerous respect ratelimit option in your client (never do this).
+
+Keep in mind that the events are raised on a background thread, not the thread you began with.
 
 # Documentation
 This project has a Doxyfile availale for you to build documentation.
